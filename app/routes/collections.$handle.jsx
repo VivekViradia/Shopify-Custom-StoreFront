@@ -64,6 +64,10 @@ query CollectionDetails($handle: String!) {
     description
     handle
     products(first: 4, after: $cursor) {
+        pageInfo{
+            hasNextPage
+            endCursor
+        }
       nodes {
         id
         title
