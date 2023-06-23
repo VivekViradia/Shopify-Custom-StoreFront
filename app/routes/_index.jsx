@@ -33,11 +33,6 @@ export default function Index() {
                     data={collection.image}
                     key={collection.id}
                     sizes="(max-width: 32em) 100vw, 33vw"
-                    // widths={[400, 500, 600, 700, 800, 900]}
-                    // loaderOptions={{
-                    //   scale: 2,
-                    //   crop: 'center',
-                    // }}
                   />
                 )}
                 <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy">

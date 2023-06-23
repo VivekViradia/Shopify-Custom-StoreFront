@@ -1,19 +1,26 @@
-import {useState} from 'react';
+import {useFetcher} from '@remix-run/react';
+import {useEffect, useState} from 'react';
 import ProductCard from './ProductCard';
-import {useFetcher} from 'react-router-dom';
 
 export default function ProductGrid({collection, url}) {
-  const fetcher = useFetcher();
   const [nextPage, setNextPage] = useState(
     collection.products.pageInfo.hasNextPage,
   );
+
   const [endCursor, setEndCursor] = useState(
     collection.products.pageInfo.endCursor,
   );
+
   const [products, setProducts] = useState(collection.products.nodes || []);
-  const fetchMoreProducts = () => {
-    fetcher.load(`${url}?index$cursor=${endCursor}`);
-  };
+
+  // For making client-side requests
+
+  const fetcher = useFetcher();
+
+  function fetchMoreProducts() {
+    // ?index differentiates index routes from their parent layout routes
+    fetcher.load(`${url}?index&cursor=${endCursor}`);
+  }
 
   useEffect(() => {
     if (!fetcher.data) return;
@@ -38,7 +45,7 @@ export default function ProductGrid({collection, url}) {
             disabled={fetcher.state !== 'idle'}
             onClick={fetchMoreProducts}
           >
-            {fetcher.state !== 'idle' ? 'Loading....' : 'Load More Products'}
+            {fetcher.state !== 'idle' ? 'Loading...' : 'Load more products'}
           </button>
         </div>
       )}
