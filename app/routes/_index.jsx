@@ -15,7 +15,6 @@ export async function loader({context}) {
 
 export default function Index() {
   const {collections} = useLoaderData();
-  console.log(collections);
 
   return (
     <section className="w-full gap-4">
