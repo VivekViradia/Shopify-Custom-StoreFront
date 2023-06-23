@@ -20,26 +20,26 @@ export async function loader({params, context}) {
   });
 }
 
-// function PrintJson({data}) {
-//   return (
-//     <details className="outline outline-2 outline-blue-300n p-4 my-2">
-//       <summary>Product JSON</summary>
-//       <pre>{JSON.stringify(data, null, 2)}</pre>
-//     </details>
-//   );
-// }
+function PrintJson({data}) {
+  return (
+    <details className="outline outline-2 outline-blue-300n p-4 my-2">
+      <summary>Product JSON</summary>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </details>
+  );
+}
 
-function PhotoGallery({media}) {
+function ProductGallery({media}) {
   if (!media.length) {
     return null;
   }
+
   const typeNameMap = {
     MODEL_3D: 'Model3d',
     VIDEO: 'Video',
     IMAGE: 'MediaImage',
     EXTERNAL_VIDEO: 'ExternalVideo',
   };
-  console.log('MEDIA', media);
 
   return (
     <div
@@ -47,26 +47,26 @@ function PhotoGallery({media}) {
     >
       {media.map((med, i) => {
         let extraProps = {};
+
         if (med.mediaContentType === 'MODEL_3D') {
           extraProps = {
             interactionPromptThreshold: '0',
             ar: true,
             loading: 'eager',
             disableZoom: true,
-            style: {
-              height: '100px',
-              margin: '0 auto',
-            },
+            style: {height: '100%', margin: '0 auto'},
           };
         }
+
         const data = {
           ...med,
-          __typename: typeNameMap[med.mediaContectType] || typeNameMap['IMAGE'],
+          __typename: typeNameMap[med.mediaContentType] || typeNameMap['IMAGE'],
           image: {
             ...med.image,
-            altText: med.alt || 'Product Image',
+            altText: med.alt || 'Product image',
           },
         };
+
         return (
           <div
             className={`${
@@ -95,7 +95,7 @@ export default function ProductHandle() {
       <div className="grid items-start gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
         <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden md:grid-cols-2 md:w-full lg:col-span-2">
           <div className="md:col-span-2 snap-center card-image aspect-square md:w-full w-[80vw] shadow rounded">
-            <h2>TODO Product Gallery</h2>
+            <ProductGallery media={product.media.nodes} />
           </div>
         </div>
         <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-8 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
@@ -107,7 +107,8 @@ export default function ProductHandle() {
               {product.vendor}
             </span>
           </div>
-          <PhotoGallery media={product.media.nodes} />
+          <h3>Product Options TODO</h3>
+
           <div
             className="prose border-t border-gray-200 pt-6 text-black text-md"
             dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
