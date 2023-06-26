@@ -13,7 +13,8 @@ export function CartLineItems({linesObj}) {
 }
 
 function LineItem({lineItem}) {
-  const {merchandise, qunantity} = lineItem;
+  const {merchandise, quantity} = lineItem;
+
   return (
     <div className="flex gap-4">
       <Link
@@ -29,8 +30,8 @@ function LineItem({lineItem}) {
         >
           {merchandise.product.title}
         </Link>
-        <div className="text-grey-800 text-sm">{merchandise.title}</div>
-        <div className="text-grey-800 text-sm">Qty: {qunantity}</div>
+        <div className="text-gray-800 text-sm">{merchandise.title}</div>
+        <div className="text-gray-800 text-sm">Qty: {quantity}</div>
       </div>
       <Money data={lineItem.cost.totalAmount} />
     </div>

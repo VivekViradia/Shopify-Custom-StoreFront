@@ -98,6 +98,7 @@ function ProductForm({variantId}) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
+
   const lines = [{merchandiseId: variantId, quantity: 1}];
 
   return (
@@ -150,7 +151,7 @@ export default function ProductHandle() {
             <div className="space-y-2">
               <ShopPayButton
                 storeDomain={storeDomain}
-                variantIds={[selectedVariant.id]}
+                variantIds={[selectedVariant?.id]}
                 width={'400px'}
               />
               <ProductForm variantId={selectedVariant?.id} />
