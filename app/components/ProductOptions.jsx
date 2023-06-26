@@ -5,16 +5,28 @@ import {
   useNavigation,
 } from '@remix-run/react';
 
-export default function ProductOptions({options}) {
+export default function ProductOptions({options, selectedVariants}) {
   const {pathname, search} = useLocation();
   const [currentSearchParams] = useSearchParams();
   const navigation = useNavigation();
 
-  // Update the in-flight request data from the 'navigation' (if available)
-  // to create an optimistic UI that selects a link before the request completes
+  const paramsWithDefaults = () => {
+    const defaultParams = new URLSearchParams(currentSearchParams);
+
+    if (!selectedVariants) {
+      return defaultParams;
+    }
+    for (const {name, value} of selectedVariants.selectedOptions) {
+      if (!currentSearchParams.has(name)) {
+        defaultParams.set(name, value);
+      }
+    }
+    return defaultParams;
+  };
+
   const searchParams = navigation.location
     ? new URLSearchParams(navigation.location.search)
-    : currentSearchParams;
+    : paramsWithDefaults();
 
   return (
     <div className="grid gap-4 mb-6">

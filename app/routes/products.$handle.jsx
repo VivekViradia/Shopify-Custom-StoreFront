@@ -24,8 +24,13 @@ export async function loader({params, context, request}) {
     throw new Response(null, {status: 404});
   }
 
+  // Optionally set a default variant so you always have an "orderable" product selected
+  const selectedVariant =
+    product.selectedVariant ?? product?.variants?.nodes[0];
+
   return json({
     product,
+    selectedVariant,
   });
 }
 
@@ -88,7 +93,7 @@ function ProductGallery({media}) {
 }
 
 export default function ProductHandle() {
-  const {product} = useLoaderData();
+  const {product, selectedVariant} = useLoaderData();
 
   return (
     <section className="w-full gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">
@@ -108,7 +113,10 @@ export default function ProductHandle() {
             </span>
           </div>
           <h3>Product Options TODO</h3>
-          <ProductOptions options={product.options} />
+          <ProductOptions
+            options={product.options}
+            selectedVariant={selectedVariant}
+          />
           <p>Selected Variant: {product.selectedVariant?.id}</p>
           <div
             className="prose border-t border-gray-200 pt-6 text-black text-md"
