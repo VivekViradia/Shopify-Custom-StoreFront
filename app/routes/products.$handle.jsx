@@ -94,7 +94,7 @@ function ProductGallery({media}) {
 
 export default function ProductHandle() {
   const {product, selectedVariant} = useLoaderData();
-
+  console.log('selectedVariant', selectedVariant);
   return (
     <section className="w-full gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">
       <div className="grid items-start gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">

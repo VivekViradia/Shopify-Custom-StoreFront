@@ -5,28 +5,28 @@ import {
   useNavigation,
 } from '@remix-run/react';
 
-export default function ProductOptions({options, selectedVariants}) {
+export default function ProductOptions({options, selectedVariant}) {
   const {pathname, search} = useLocation();
   const [currentSearchParams] = useSearchParams();
   const navigation = useNavigation();
 
-  const paramsWithDefaults = () => {
+  const paramsWithDefaults = (() => {
     const defaultParams = new URLSearchParams(currentSearchParams);
 
-    if (!selectedVariants) {
+    if (!selectedVariant) {
       return defaultParams;
     }
-    for (const {name, value} of selectedVariants.selectedOptions) {
+    for (const {name, value} of selectedVariant.selectedOptions) {
       if (!currentSearchParams.has(name)) {
         defaultParams.set(name, value);
       }
     }
     return defaultParams;
-  };
+  })();
 
   const searchParams = navigation.location
     ? new URLSearchParams(navigation.location.search)
-    : paramsWithDefaults();
+    : paramsWithDefaults;
 
   return (
     <div className="grid gap-4 mb-6">
