@@ -18,10 +18,10 @@ function ItemRemoveButton({lineIds}) {
   return (
     <fetcher.Form action="/cart" method="post">
       <input type="hidden" name="cartAction" value="REMOVE_FROM_CART" />
-      <input type="hidden" name="lineIds" value={JSON.stringify(lineIds)} />
+      <input type="hidden" name="linesIds" value={JSON.stringify(lineIds)} />
       <button
-        type="submit"
         className="bg-white border-black text-black hover:text-white hover:bg-black rounded-md font-small text-center my-2 max-w-xl leading-none border w-10 h-10 flex items-center justify-center"
+        type="submit"
       >
         <IconRemove />
       </button>
