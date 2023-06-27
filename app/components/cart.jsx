@@ -60,6 +60,46 @@ function IconRemove() {
   );
 }
 
+export function CartSummary({cost}) {
+  return (
+    <>
+      <dl className="space-y-2">
+        <div className="flex items-center justify-between">
+          <dt>Subtotal</dt>
+          <dd>
+            {cost?.subtotalAmount?.amount ? (
+              <Money data={cost?.subtotalAmount} />
+            ) : (
+              '-'
+            )}
+          </dd>
+        </div>
+        <div className="flex items-center justify-between">
+          <dt className="flex items-center">
+            <span>Shipping Estimate</span>
+          </dt>
+          <dd className="text-green-600">Free & Carbon neutral</dd>
+        </div>
+      </dl>
+    </>
+  );
+}
+
+export function CartActions({checkoutUrl}) {
+  if (!checkoutUrl) return null;
+
+  return (
+    <div className="flex flex-col mt-2">
+      <a
+        href={checkoutUrl}
+        className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium"
+      >
+        Continue to Checkout
+      </a>
+    </div>
+  );
+}
+
 function LineItem({lineItem}) {
   const {merchandise, quantity} = lineItem;
 
