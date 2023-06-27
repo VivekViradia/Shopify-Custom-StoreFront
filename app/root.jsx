@@ -12,7 +12,7 @@ import favicon from '../public/favicon.svg';
 import {Layout} from './components/Layout';
 import {Seo} from '@shopify/hydrogen';
 import {defer} from '@shopify/remix-oxygen';
-import {CART_QUERY} from './queries/cart';
+import {CART_QUERY} from '~/queries/cart';
 
 export const links = () => {
   return [
@@ -32,7 +32,7 @@ export const links = () => {
 
 async function getCart({storefront}, cartId) {
   if (!storefront) {
-    throw new Error('Missing storefront client in cart query');
+    throw new Error('missing storefront client in cart query');
   }
 
   const {cart} = await storefront.query(CART_QUERY, {
@@ -43,6 +43,8 @@ async function getCart({storefront}, cartId) {
     },
     cache: storefront.CacheNone(),
   });
+
+  return cart;
 }
 
 export async function loader({context, request}) {
